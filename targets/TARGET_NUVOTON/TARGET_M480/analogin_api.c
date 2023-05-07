@@ -140,6 +140,8 @@ uint16_t analogin_read_u16(analogin_t *obj)
 {
     EADC_T *eadc_base = (EADC_T *) NU_MODBASE(obj->adc);
     uint32_t chn =  NU_MODSUBINDEX(obj->adc);
+    
+    EADC_SetExtendSampleTime(eadc_base, chn, 0xF);
 
     EADC_START_CONV(eadc_base, 1 << chn);
     while (EADC_GET_DATA_VALID_FLAG(eadc_base, 1 << chn) != ((uint32_t) (1 << chn)));
